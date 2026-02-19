@@ -8,10 +8,37 @@ import css from "./page.module.css";
 import { fetchNotes } from "@/lib/api";
 import NotesClient from "./Notes.client";
 import { FetchTagNote } from "@/types/note";
+import { Metadata } from "next";
 
 interface NotesPageProps {
   params: Promise<{ slug: string[] }>;
 }
+
+export async function generateMetadata({
+  params,
+}: NotesPageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const tag = slug[0];
+
+  return {
+    title: `${tag}`,
+    description: `Page for ${tag} tag`,
+    openGraph: {
+      title: `${tag}`,
+      description: `Page for ${tag} tag`,
+      url: 'https://08-zustand-steel-nine.vercel.app/',
+      images: [
+        {
+          url: 'https://ac.goit.global/fullstack/react/notehub-og-meta.jpg',
+          width: 1200,
+          height: 630,
+          alt: 'logo',
+        },
+      ],
+    },
+  };
+}
+
 export default async function NotesPage({ params }: NotesPageProps) {
   const { slug } = await params;
   const tag = (slug?.[0] ?? "all") as FetchTagNote;
