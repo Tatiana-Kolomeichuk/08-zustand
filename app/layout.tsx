@@ -42,9 +42,9 @@ export default function RootLayout({
   children: React.ReactNode;
   modal: React.ReactNode;
 }>) {
-  return (
+ return (
     <html lang="en">
-      <body className={roboto.variable}>
+      <body className={`${roboto.variable}`}>
         <TanStackProvider>
           <Header />
           {children}
