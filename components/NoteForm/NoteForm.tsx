@@ -45,7 +45,10 @@ export default function NoteForm() {
   }
 
   const router = useRouter();
-  const handleCancel = () => router.push('/notes/filter/all');
+  
+   function handleCancel() {
+    router.back();
+  }
 
   return (
     <form className={css.form} action={handleSubmit}>
@@ -58,7 +61,7 @@ export default function NoteForm() {
           name="title"
           className={css.input}
           required
-          defaultValue={draft.title}
+          value={draft.title}
         />
       </div>
 
@@ -70,7 +73,7 @@ export default function NoteForm() {
           name="content"
           className={css.textarea}
           rows={8}
-          defaultValue={draft.content}
+          value={draft.content}
         />
       </div>
 
@@ -81,7 +84,7 @@ export default function NoteForm() {
           id={`${id}-tag`}
           name="tag"
           className={css.select}
-          defaultValue={draft.tag}
+          value={draft.tag}
         >
           <option value="Todo">Todo</option>
           <option value="Work">Work</option>

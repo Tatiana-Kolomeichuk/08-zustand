@@ -1,46 +1,13 @@
-NoteHub (Next.js)
+NoteHub : SEO + Create Note + Draft (Zustand)
 
-Застосунок перенесено зі SPA на багатосторінкову структуру Next.js App Router з маршрутизацією:
+Цей проєкт — застосунок для роботи з нотатками NoteHub на базі Next.js App Router. У рамках завдання реалізовано:
 
-/ — головна сторінка з описом застосунку.
+SEO-метадані для всіх ключових сторінок (включно з Open Graph).
 
-/notes — сторінка зі списком нотаток: відображення всіх нотаток, пошук за ключовим словом, створення нової нотатки.
+Глобальне підключення шрифту Roboto через next/font/google.
 
-/notes/[id] — сторінка деталей нотатки (динамічний маршрут), показ повної інформації за id.
+Винесення створення нотатки на окремий маршрут /notes/action/create.
 
-Спільний Layout
+Переписування NoteForm з Formik на стандартні HTML-форми.
 
-Усі сторінки мають спільні компоненти:
-
-Header з навігацією (Home / Notes) через next/link
-
-Footer з контактною інформацією розробника
-
-Дані та API
-
-API-логіку перенесено в lib/api.ts (із попереднього noteService.ts)
-
-додано fetchNoteById для отримання деталей нотатки
-
-використовується env-змінна NEXT_PUBLIC_NOTEHUB_TOKEN (process.env.NEXT_PUBLIC_NOTEHUB_TOKEN)
-
-типи винесені в types/note.ts
-
-TanStack Query + SSR
-
-Сторінки /notes та /notes/[id] реалізовані як SSR-компоненти з prefetch даних через TanStack Query і гідратацією кешу.
-Клієнтська логіка винесена в:
-
-app/notes/Notes.client.tsx
-
-app/notes/NoteDetails.client.tsx (отримання id через useParams())
-
-Глобально підключено QueryClientProvider через TanStackProvider у app/layout.tsx.
-
-Loading / Error
-
-глобальний loading.tsx: Loading, please wait...
-
-error.tsx для /notes: Could not fetch the list of notes. {error.message}
-
-error.tsx для /notes/[id]: Could not fetch note details. {error.message}
+Автозбереження draft (чернетки) через Zustand + persist у localStorage
