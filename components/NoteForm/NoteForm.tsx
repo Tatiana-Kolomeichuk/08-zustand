@@ -12,7 +12,7 @@ import { useDraft } from "@/lib/store/noteStore";
 export default function NoteForm() {
   const id = useId();
   const queryClient = useQueryClient();
-  const { note, setDraft, clearDraft } = useDraft();
+  const { draft, setDraft, clearDraft } = useDraft();
 
   const createMutation = useMutation({
     mutationFn:async (data: NewNote) => {
@@ -31,7 +31,7 @@ export default function NoteForm() {
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >
   ) {
-    const data = { ...note, [ev.target.name]: ev.target.value };
+    const data = { ...draft, [ev.target.name]: ev.target.value };
     setDraft(data);
   } 
 
@@ -58,7 +58,7 @@ export default function NoteForm() {
           name="title"
           className={css.input}
           required
-          defaultValue={note.title}
+          defaultValue={draft.title}
         />
       </div>
 
@@ -70,7 +70,7 @@ export default function NoteForm() {
           name="content"
           className={css.textarea}
           rows={8}
-          defaultValue={note.content}
+          defaultValue={draft.content}
         />
       </div>
 
@@ -81,7 +81,7 @@ export default function NoteForm() {
           id={`${id}-tag`}
           name="tag"
           className={css.select}
-          defaultValue={note.tag}
+          defaultValue={draft.tag}
         >
           <option value="Todo">Todo</option>
           <option value="Work">Work</option>

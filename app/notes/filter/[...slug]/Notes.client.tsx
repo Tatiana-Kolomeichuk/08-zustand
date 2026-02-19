@@ -1,40 +1,39 @@
-'use client';
+"use client";
 
 import css from "./page.module.css";
 
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
+import Link from "next/link";
+
 import { fetchNotes } from "@/lib/api";
 import SearchBox from "@/components/SearchBox/SearchBox";
 import Pagination from "@/components/Pagination/Pagination";
 import NoteList from "@/components/NoteList/NoteList";
-import Modal from "@/components/Modal/Modal";
-import NoteForm from "@/components/NoteForm/NoteForm";
 import { FetchTagNote } from "@/types/note";
 
 type NotesClientProps = {
   tag: FetchTagNote;
 };
 
-export default function App({ tag }: NotesClientProps) {
+export default function NotesClient({ tag }: NotesClientProps) {
   const [page, setPage] = useState(1);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
 
   const { data, isError } = useQuery({
-  queryKey: ["notes", page, debouncedSearch, tag],
-  queryFn: () =>
-    fetchNotes({
-      page,
-      perPage: 12,
-      search: debouncedSearch,
-      tag: tag === "all" ? undefined : tag,
-    }),
-  placeholderData: keepPreviousData,
-});
+    queryKey: ["notes", page, debouncedSearch, tag],
+    queryFn: () =>
+      fetchNotes({
+        page,
+        perPage: 12,
+        search: debouncedSearch,
+        tag: tag === "all" ? undefined : tag,
+      }),
+    placeholderData: keepPreviousData,
+  });
 
   useEffect(() => {
     if (isError) toast.error("Failed to load notes");
@@ -44,9 +43,6 @@ export default function App({ tag }: NotesClientProps) {
     setDebouncedSearch(value);
     setPage(1);
   }, 500);
-
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
 
   return (
     <div className={css.app}>
@@ -67,20 +63,12 @@ export default function App({ tag }: NotesClientProps) {
           />
         )}
 
-        <button className={css.button} onClick={openModal}>
+        <Link className={css.button} href="/notes/action/create">
           Create note +
-        </button>
+        </Link>
       </header>
 
-      <Toaster />
-
       {data && data.notes.length > 0 && <NoteList notes={data.notes} />}
-
-      {isModalOpen && (
-        <Modal onClose={closeModal}>
-          <NoteForm  />
-        </Modal>
-      )}
     </div>
   );
 }
