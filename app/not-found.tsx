@@ -10,7 +10,7 @@ export const metadata: Metadata = {
    openGraph: {
       title: 'Not found',
       description: 'Page is not found',
-      url: '',
+      // url: '',
       siteName: 'NoteHub',
       images: [
         {
