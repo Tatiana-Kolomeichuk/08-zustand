@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   },
 };
 
-export function CreateNote() {
+export default function CreateNote() {
 return(<main className={css.main}>
   <div className={css.container}>
     <h1 className={css.title}>Create note</h1>

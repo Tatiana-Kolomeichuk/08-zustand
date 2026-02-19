@@ -9,24 +9,7 @@ import { NewNote, TagNote } from "@/types/note";
 import { useDraft } from "@/lib/store/noteStore";
 
 
-interface NoteFormProps {
-  onClose: () => void;
-}
-
-interface FormValues {
-  title: string;
-  content: string;
-  tag: string;
-}
-
-const initialValues: FormValues = {
-  title: "",
-  content: "",
-  tag: "Todo",
-};
-
-
-export default function NoteForm({ onClose }: NoteFormProps) {
+export default function NoteForm() {
   const id = useId();
   const queryClient = useQueryClient();
   const { note, setDraft, clearDraft } = useDraft();
